@@ -93,7 +93,7 @@ def full_app():
             initial_drawing=star_state
             if st.sidebar.checkbox("Initialize with star")
             else None,
-            key="canvas",
+            key="full_app",
         )
 
         # Do something interesting with the image data and paths
@@ -126,7 +126,7 @@ def center_circle_app():
         height=400,
         width=600,
         drawing_mode="circle",
-        key="canvas",
+        key="center_circle_app",
     )
     with st.echo("below"):
         if canvas_result.json_data is not None:
@@ -175,7 +175,7 @@ def color_annotation_app():
             height=320,
             width=512,
             drawing_mode=mode,
-            key="canvas",
+            key="color_annotation_app",
         )
         if canvas_result.json_data is not None:
             df = pd.json_normalize(canvas_result.json_data["objects"])
@@ -245,7 +245,7 @@ def png_export():
                 }}
         </style> """
 
-    data = st_canvas(update_streamlit=False)
+    data = st_canvas(update_streamlit=False, key="png_export")
     if data is not None and data.image_data is not None:
         img_data = data.image_data
         im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
