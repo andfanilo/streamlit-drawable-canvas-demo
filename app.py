@@ -18,6 +18,7 @@ import SessionState
 
 def main():
     st.title("Drawable Canvas Demo")
+    st.sidebar.subheader("Configuration")
     PAGES = {
         "About": about,
         "Full example": full_app,
@@ -27,6 +28,17 @@ def main():
     }
     page = st.sidebar.selectbox("Page:", options=list(PAGES.keys()))
     PAGES[page]()
+
+    with st.sidebar:
+        st.markdown("---")
+        st.markdown(
+            '<h6>Made in &nbsp<img src="https://streamlit.io/images/brand/streamlit-mark-color.png" alt="Streamlit logo" height="16">&nbsp by <a href="https://twitter.com/andfanilo">@andfanilo</a></h6>',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            '<div style="margin: 0.75em 0;"><a href="https://www.buymeacoffee.com/andfanilo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a></div>',
+            unsafe_allow_html=True
+        )
 
 
 def about():
