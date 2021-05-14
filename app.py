@@ -21,7 +21,7 @@ def main():
     st.sidebar.subheader("Configuration")
     PAGES = {
         "About": about,
-        "Full example": full_app,
+        "Basic example": full_app,
         "Get center coords of circles": center_circle_app,
         "Color-based image annotation": color_annotation_app,
         "Download Base64 encoded PNG": png_export,
@@ -33,11 +33,11 @@ def main():
         st.markdown("---")
         st.markdown(
             '<h6>Made in &nbsp<img src="https://streamlit.io/images/brand/streamlit-mark-color.png" alt="Streamlit logo" height="16">&nbsp by <a href="https://twitter.com/andfanilo">@andfanilo</a></h6>',
-            unsafe_allow_html=True
+            unsafe_allow_html=True,
         )
         st.markdown(
             '<div style="margin: 0.75em 0;"><a href="https://www.buymeacoffee.com/andfanilo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a></div>',
-            unsafe_allow_html=True
+            unsafe_allow_html=True,
         )
 
 
@@ -88,23 +88,17 @@ def full_app():
         )
         realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
-        with open("star_state.json", "r") as f:
-            star_state = json.load(f)
-            star_state["background"] = bg_color
-
         # Create a canvas component
         canvas_result = st_canvas(
             fill_color="rgba(255, 165, 0, 0.3)",  # Fixed fill color with some opacity
             stroke_width=stroke_width,
             stroke_color=stroke_color,
-            background_color="" if bg_image else bg_color,
+            background_color=bg_color,
             background_image=Image.open(bg_image) if bg_image else None,
             update_streamlit=realtime_update,
             height=150,
             drawing_mode=drawing_mode,
-            initial_drawing=star_state
-            if st.sidebar.checkbox("Initialize with star")
-            else None,
+            display_toolbar=st.sidebar.checkbox("Display toolbar", True),
             key="full_app",
         )
 
@@ -130,11 +124,18 @@ def center_circle_app():
     """
     )
     bg_image = Image.open("img/tennis-balls.jpg")
+
+    with open("saved_state.json", "r") as f:
+        saved_state = json.load(f)
+
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.2)",  # Fixed fill color with some opacity
         stroke_width=5,
         stroke_color="black",
         background_image=bg_image,
+        initial_drawing=saved_state
+        if st.sidebar.checkbox("Initialize with saved state", False)
+        else None,
         height=400,
         width=600,
         drawing_mode="circle",
