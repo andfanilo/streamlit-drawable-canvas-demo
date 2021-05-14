@@ -19,6 +19,7 @@ import SessionState
 def main():
     st.title("Drawable Canvas Demo")
     st.sidebar.subheader("Configuration")
+    session_state = SessionState.get(button_id="", color_to_label={})
     PAGES = {
         "About": about,
         "Basic example": full_app,
@@ -27,7 +28,7 @@ def main():
         "Download Base64 encoded PNG": png_export,
     }
     page = st.sidebar.selectbox("Page:", options=list(PAGES.keys()))
-    PAGES[page]()
+    PAGES[page](session_state)
 
     with st.sidebar:
         st.markdown("---")
@@ -41,7 +42,7 @@ def main():
         )
 
 
-def about():
+def about(session_state):
     st.markdown(
         """
     Welcome to the demo of [Streamlit Drawable Canvas](https://github.com/andfanilo/streamlit-drawable-canvas).
@@ -67,7 +68,7 @@ def about():
     )
 
 
-def full_app():
+def full_app(session_state):
     st.sidebar.header("Configuration")
     st.markdown(
         """
@@ -109,7 +110,7 @@ def full_app():
             st.dataframe(pd.json_normalize(canvas_result.json_data["objects"]))
 
 
-def center_circle_app():
+def center_circle_app(session_state):
     st.markdown(
         """
     Computation of center coordinates for circle drawings some understanding of Fabric.js coordinate system
@@ -160,7 +161,7 @@ def center_circle_app():
                 )
 
 
-def color_annotation_app():
+def color_annotation_app(session_state):
     st.markdown(
         """
     Drawable Canvas doesn't provided out-of-the-box image annotation capabilities, but we can hack something with SessionState,
@@ -174,7 +175,6 @@ def color_annotation_app():
     )
     with st.echo("below"):
         bg_image = Image.open("img/annotation.jpeg")
-        session_state = SessionState.get(color_to_label={})
         label_color = (
             st.sidebar.color_picker("Annotation color: ", "#EA1010") + "77"
         )  # for alpha from 00 to FF
@@ -202,7 +202,7 @@ def color_annotation_app():
             st.json(session_state.color_to_label)
 
 
-def png_export():
+def png_export(session_state):
     st.markdown(
         """
     Realtime update is disabled for this demo. 
@@ -223,7 +223,6 @@ def png_export():
         if os.stat(f).st_mtime < now - N_HOURS_BEFORE_DELETION * 3600:
             Path.unlink(f)
 
-    session_state = SessionState.get(button_id="")
     if session_state.button_id == "":
         session_state.button_id = re.sub("\d+", "", str(uuid.uuid4()).replace("-", ""))
 
