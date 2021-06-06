@@ -76,7 +76,7 @@ def full_app(session_state):
         """
     Draw on the canvas, get the drawings back to Streamlit!
     * Configure canvas in the sidebar
-    * Doubleclick to remove the selected object when not in drawing mode
+    * In transform mode, double-click an object to remove it
     * In polygon mode, left-click to add a point, right-click to close the polygon, double-click to remove the latest point
     """
     )
