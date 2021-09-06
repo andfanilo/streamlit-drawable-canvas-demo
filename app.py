@@ -18,9 +18,10 @@ import SessionState
 
 
 def main():
-    st.title("Drawable Canvas Demo")
-    st.sidebar.subheader("Configuration")
-    session_state = SessionState.get(button_id="", color_to_label={})
+    if 'button_id' not in st.session_state:
+        st.session_state['button_id'] = ''
+    if 'color_to_label' not in st.session_state:
+        st.session_state['color_to_label'] = {}
     PAGES = {
         "About": about,
         "Basic example": full_app,
@@ -30,7 +31,7 @@ def main():
         "Compute the length of drawn arcs": compute_arc_length,
     }
     page = st.sidebar.selectbox("Page:", options=list(PAGES.keys()))
-    PAGES[page](session_state)
+    PAGES[page]()
 
     with st.sidebar:
         st.markdown("---")
@@ -44,7 +45,7 @@ def main():
         )
 
 
-def about(session_state):
+def about():
     st.markdown(
         """
     Welcome to the demo of [Streamlit Drawable Canvas](https://github.com/andfanilo/streamlit-drawable-canvas).
@@ -70,7 +71,7 @@ def about(session_state):
     )
 
 
-def full_app(session_state):
+def full_app():
     st.sidebar.header("Configuration")
     st.markdown(
         """
@@ -110,10 +111,13 @@ def full_app(session_state):
         if canvas_result.image_data is not None:
             st.image(canvas_result.image_data)
         if canvas_result.json_data is not None:
-            st.dataframe(pd.json_normalize(canvas_result.json_data["objects"]))
+            objects = pd.json_normalize(canvas_result.json_data["objects"])
+            for col in objects.select_dtypes(include=['object']).columns:
+                objects[col] = objects[col].astype("str")
+            st.dataframe(objects)
 
 
-def center_circle_app(session_state):
+def center_circle_app():
     st.markdown(
         """
     Computation of center coordinates for circle drawings some understanding of Fabric.js coordinate system
@@ -164,7 +168,7 @@ def center_circle_app(session_state):
                 )
 
 
-def color_annotation_app(session_state):
+def color_annotation_app():
     st.markdown(
         """
     Drawable Canvas doesn't provided out-of-the-box image annotation capabilities, but we can hack something with SessionState,
@@ -197,15 +201,15 @@ def color_annotation_app(session_state):
             df = pd.json_normalize(canvas_result.json_data["objects"])
             if len(df) == 0:
                 return
-            session_state.color_to_label[label_color] = label
-            df["label"] = df["fill"].map(session_state.color_to_label)
+            st.session_state["color_to_label"][label_color] = label
+            df["label"] = df["fill"].map(st.session_state["color_to_label"])
             st.dataframe(df[["top", "left", "width", "height", "fill", "label"]])
 
-        with st.beta_expander("Color to label mapping"):
-            st.json(session_state.color_to_label)
+        with st.expander("Color to label mapping"):
+            st.json(st.session_state["color_to_label"])
 
 
-def png_export(session_state):
+def png_export():
     st.markdown(
         """
     Realtime update is disabled for this demo. 
@@ -226,10 +230,10 @@ def png_export(session_state):
         if os.stat(f).st_mtime < now - N_HOURS_BEFORE_DELETION * 3600:
             Path.unlink(f)
 
-    if session_state.button_id == "":
-        session_state.button_id = re.sub("\d+", "", str(uuid.uuid4()).replace("-", ""))
+    if st.session_state["button_id"] == "":
+        st.session_state["button_id"] = re.sub("\d+", "", str(uuid.uuid4()).replace("-", ""))
 
-    button_id = session_state.button_id
+    button_id = st.session_state["button_id"]
     file_path = f"tmp/{button_id}.png"
 
     custom_css = f""" 
@@ -282,7 +286,7 @@ def png_export(session_state):
         st.markdown(dl_link, unsafe_allow_html=True)
 
 
-def compute_arc_length(session_state):
+def compute_arc_length():
     st.markdown(
         """
     Using an external SVG manipulation library like [svgpathtools](https://github.com/mathandy/svgpathtools)
@@ -317,4 +321,6 @@ if __name__ == "__main__":
     st.set_page_config(
         page_title="Streamlit Drawable Canvas Demo", page_icon=":pencil2:"
     )
+    st.title("Drawable Canvas Demo")
+    st.sidebar.subheader("Configuration")
     main()
