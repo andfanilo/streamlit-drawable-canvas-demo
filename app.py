@@ -14,14 +14,12 @@ from PIL import Image
 from streamlit_drawable_canvas import st_canvas
 from svgpathtools import parse_path
 
-import SessionState
-
 
 def main():
-    if 'button_id' not in st.session_state:
-        st.session_state['button_id'] = ''
-    if 'color_to_label' not in st.session_state:
-        st.session_state['color_to_label'] = {}
+    if "button_id" not in st.session_state:
+        st.session_state["button_id"] = ""
+    if "color_to_label" not in st.session_state:
+        st.session_state["color_to_label"] = {}
     PAGES = {
         "About": about,
         "Basic example": full_app,
@@ -89,7 +87,8 @@ def full_app():
         bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
         bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
         drawing_mode = st.sidebar.selectbox(
-            "Drawing tool:", ("freedraw", "line", "rect", "circle", "transform", "polygon")
+            "Drawing tool:",
+            ("freedraw", "line", "rect", "circle", "transform", "polygon"),
         )
         realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
@@ -112,7 +111,7 @@ def full_app():
             st.image(canvas_result.image_data)
         if canvas_result.json_data is not None:
             objects = pd.json_normalize(canvas_result.json_data["objects"])
-            for col in objects.select_dtypes(include=['object']).columns:
+            for col in objects.select_dtypes(include=["object"]).columns:
                 objects[col] = objects[col].astype("str")
             st.dataframe(objects)
 
@@ -171,7 +170,7 @@ def center_circle_app():
 def color_annotation_app():
     st.markdown(
         """
-    Drawable Canvas doesn't provided out-of-the-box image annotation capabilities, but we can hack something with SessionState,
+    Drawable Canvas doesn't provided out-of-the-box image annotation capabilities, but we can hack something with session state,
     by mapping a drawing fill color to a label.
 
     Annotate pedestrians, cars and traffic lights with this one, with any color/label you want 
@@ -231,7 +230,9 @@ def png_export():
             Path.unlink(f)
 
     if st.session_state["button_id"] == "":
-        st.session_state["button_id"] = re.sub("\d+", "", str(uuid.uuid4()).replace("-", ""))
+        st.session_state["button_id"] = re.sub(
+            "\d+", "", str(uuid.uuid4()).replace("-", "")
+        )
 
     button_id = st.session_state["button_id"]
     file_path = f"tmp/{button_id}.png"
