@@ -87,7 +87,7 @@ def full_app():
             ("freedraw", "line", "rect", "circle", "transform", "polygon", "point"),
         )
         stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
-        if drawing_mode == 'point':
+        if drawing_mode == "point":
             point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
         stroke_color = st.sidebar.color_picker("Stroke color hex: ")
         bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
@@ -104,7 +104,7 @@ def full_app():
             update_streamlit=realtime_update,
             height=150,
             drawing_mode=drawing_mode,
-            point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
+            point_display_radius=point_display_radius if drawing_mode == "point" else 0,
             display_toolbar=st.sidebar.checkbox("Display toolbar", True),
             key="full_app",
         )
