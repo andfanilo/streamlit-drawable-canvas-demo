@@ -106,6 +106,7 @@ def full_app():
             drawing_mode=drawing_mode,
             point_display_radius=point_display_radius if drawing_mode == "point" else 0,
             display_toolbar=st.sidebar.checkbox("Display toolbar", True),
+            return_image_data=True,
             key="full_app",
         )
 
@@ -114,8 +115,9 @@ def full_app():
             st.image(canvas_result.image_data)
         if canvas_result.json_data is not None:
             objects = pd.json_normalize(canvas_result.json_data["objects"])
-            for col in objects.select_dtypes(include=["object"]).columns:
-                objects[col] = objects[col].astype("str")
+            for col in objects.columns:
+                if objects[col].dtype == "object":
+                    objects[col] = objects[col].astype("str")
             st.dataframe(objects)
 
 
@@ -215,7 +217,8 @@ def png_export():
     st.markdown(
         """
     Realtime update is disabled for this demo. 
-    Press the 'Download' button at the bottom of canvas to update exported image.
+    Press the 'Update the app with this drawing' button in the canvas toolbar to update
+    the exported image.
     """
     )
     try:
@@ -234,7 +237,7 @@ def png_export():
 
     if st.session_state["button_id"] == "":
         st.session_state["button_id"] = re.sub(
-            "\d+", "", str(uuid.uuid4()).replace("-", "")
+            r"\d+", "", str(uuid.uuid4()).replace("-", "")
         )
 
     button_id = st.session_state["button_id"]
@@ -268,7 +271,7 @@ def png_export():
                 }}
         </style> """
 
-    data = st_canvas(update_streamlit=False, key="png_export")
+    data = st_canvas(update_streamlit=False, return_image_data=True, key="png_export")
     if data is not None and data.image_data is not None:
         img_data = data.image_data
         im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
