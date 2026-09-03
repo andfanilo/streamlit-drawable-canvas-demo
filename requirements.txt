@@ -1,6 +1,0 @@
-streamlit>=1.53
-streamlit-drawable-canvas[image]>=0.10.0
-numpy
-pandas
-pillow
-svgpathtools
