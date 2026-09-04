@@ -2,9 +2,6 @@ import streamlit as st
 
 st.set_page_config(page_title="Streamlit Drawable Canvas Demo", page_icon=":pencil2:")
 
-if "color_to_label" not in st.session_state:
-    st.session_state["color_to_label"] = {}
-
 page = st.navigation(
     {
         "": [
@@ -36,6 +33,11 @@ page = st.navigation(
             st.Page("app_pages/point.py", title="Point", icon=":material/place:"),
             st.Page(
                 "app_pages/text.py", title="Text", icon=":material/text_fields:"
+            ),
+            st.Page(
+                "app_pages/labeled_boxes.py",
+                title="Labeled boxes",
+                icon=":material/label:",
             ),
         ],
         "Editing & canvas": [
