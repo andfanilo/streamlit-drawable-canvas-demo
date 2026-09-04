@@ -9,7 +9,7 @@ dependencies = [
     "pandas",
     "pillow",
     "streamlit>=1.53",
-    "streamlit-drawable-canvas[image]>=0.12.0",
+    "streamlit-drawable-canvas[image]>=0.13.0",
     "svgpathtools",
 ]
 
