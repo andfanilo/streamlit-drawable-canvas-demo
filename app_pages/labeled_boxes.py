@@ -28,16 +28,25 @@ with st.echo("below"):
     else:
         label = st.sidebar.text_input("Label:", "pedestrian")
 
+    fill_hex = st.sidebar.color_picker("Fill color: ", "#FFA500")
+    fill_opacity = st.sidebar.slider("Fill opacity: ", 0.0, 1.0, 0.0)
+    stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
     stroke_color = st.sidebar.color_picker("Box color: ", "#EA1010")
+    font_size = st.sidebar.slider("Chip font size: ", 8, 40, 20)
+
+    r, g, b = (int(fill_hex[i : i + 2], 16) for i in (1, 3, 5))
+    fill_color = f"rgba({r}, {g}, {b}, {fill_opacity})"
 
     canvas_result = st_canvas(
+        fill_color=fill_color,
         stroke_color=stroke_color,
-        stroke_width=3,
+        stroke_width=stroke_width,
         background_image=bg_image,
         height=320,
         width=512,
         drawing_mode="labeled_rect",
         label=label,
+        font_size=font_size,
         key="labeled_boxes_app",
     )
 

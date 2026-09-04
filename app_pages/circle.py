@@ -9,11 +9,20 @@ distance.
 """
 )
 with st.echo("below"):
+    fill_hex = st.sidebar.color_picker("Fill color: ", "#FFA500")
+    fill_opacity = st.sidebar.slider("Fill opacity: ", 0.0, 1.0, 0.3)
+    stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
+    stroke_color = st.sidebar.color_picker("Stroke color: ", "#000000")
+    background_color = st.sidebar.color_picker("Background color: ", "#eeeeee")
+
+    r, g, b = (int(fill_hex[i : i + 2], 16) for i in (1, 3, 5))
+    fill_color = f"rgba({r}, {g}, {b}, {fill_opacity})"
+
     canvas_result = st_canvas(
-        fill_color="rgba(255, 165, 0, 0.3)",
-        stroke_width=3,
-        stroke_color="#000000",
-        background_color="#eee",
+        fill_color=fill_color,
+        stroke_width=stroke_width,
+        stroke_color=stroke_color,
+        background_color=background_color,
         height=400,
         width=600,
         drawing_mode="circle",

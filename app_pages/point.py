@@ -9,11 +9,17 @@ marking landmarks or keypoints rather than drawing shapes.
 """
 )
 with st.echo("below"):
+    fill_color = st.sidebar.color_picker("Fill color: ", "#EEEEEE")
+    stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
+    stroke_color = st.sidebar.color_picker("Stroke color: ", "#000000")
+    background_color = st.sidebar.color_picker("Background color: ", "#eeeeee")
     point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
 
     canvas_result = st_canvas(
-        stroke_color="#000000",
-        background_color="#eee",
+        fill_color=fill_color,
+        stroke_width=stroke_width,
+        stroke_color=stroke_color,
+        background_color=background_color,
         height=400,
         width=600,
         drawing_mode="point",

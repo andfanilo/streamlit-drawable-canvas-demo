@@ -10,10 +10,14 @@ in that object's path.
 """
 )
 with st.echo("below"):
+    stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
+    stroke_color = st.sidebar.color_picker("Stroke color: ", "#000000")
+    background_color = st.sidebar.color_picker("Background color: ", "#eeeeee")
+
     canvas_result = st_canvas(
-        stroke_width=3,
-        stroke_color="#000000",
-        background_color="#eee",
+        stroke_width=stroke_width,
+        stroke_color=stroke_color,
+        background_color=background_color,
         height=400,
         width=600,
         drawing_mode="freedraw",
