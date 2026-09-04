@@ -1591,22 +1591,14 @@ wheels = [
 
 [[package]]
 name = "streamlit-drawable-canvas"
-version = "0.10.0"
+version = "0.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "streamlit" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/28/44/9beb2d7ee8096fdbf4c7844979f831a7a728916a1762bc093f9f5a7aa6dc/streamlit_drawable_canvas-0.10.0.tar.gz", hash = "sha256:ab9dffbd6e1b7d53de359344661cea9c323cb900815172860ec2a2adfc627cd2", size = 120855, upload-time = "2026-09-03T18:15:47.042Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/03/c5/ee2c40cc0a51c50b30b4b1ac439e89bb4826f3ccb0ecd0d366ad3d811519/streamlit_drawable_canvas-0.12.0.tar.gz", hash = "sha256:93738edbc03fbb6f4071723a4a71e43193abbc8465557e0a887f1a776fd17c08", size = 126489, upload-time = "2026-09-04T17:57:19.341Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/88/97/669cb33ca642243d7cf7846b7384ab121b3ddae39afafce29c15d0764023/streamlit_drawable_canvas-0.10.0-py3-none-any.whl", hash = "sha256:3e9abed2eb228b8bbbe4fc45a0c112af5baa0d5593aad616c0618ba7df6a4f25", size = 117418, upload-time = "2026-09-03T18:15:45.584Z" },
-]
-
-[package.optional-dependencies]
-image = [
-    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
-    { name = "numpy", version = "2.5.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-    { name = "pillow" },
+    { url = "https://files.pythonhosted.org/packages/64/13/0316045859092a44ea18ec2de78d42cd66007846dbf8e1e3116dd891f34a/streamlit_drawable_canvas-0.12.0-py3-none-any.whl", hash = "sha256:daed7667c3783b7be2a45fa796ad6d8ffcd0e089aa063f313e1311197dfddb7d", size = 122393, upload-time = "2026-09-04T17:57:18.19Z" },
 ]
 
 [[package]]
@@ -1621,7 +1613,7 @@ dependencies = [
     { name = "pandas", version = "3.0.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pillow" },
     { name = "streamlit" },
-    { name = "streamlit-drawable-canvas", extra = ["image"] },
+    { name = "streamlit-drawable-canvas" },
     { name = "svgpathtools" },
 ]
 
@@ -1631,7 +1623,7 @@ requires-dist = [
     { name = "pandas" },
     { name = "pillow" },
     { name = "streamlit", specifier = ">=1.53" },
-    { name = "streamlit-drawable-canvas", extras = ["image"], specifier = ">=0.10.0" },
+    { name = "streamlit-drawable-canvas", extras = ["image"], specifier = ">=0.12.0" },
     { name = "svgpathtools" },
 ]
 
