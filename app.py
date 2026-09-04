@@ -69,11 +69,6 @@ page = st.navigation(
                 icon=":material/adjust:",
             ),
             st.Page(
-                "app_pages/color_annotation.py",
-                title="Color-based image annotation",
-                icon=":material/palette:",
-            ),
-            st.Page(
                 "app_pages/form_submit.py",
                 title="Update on form submit",
                 icon=":material/assignment:",

@@ -5,14 +5,14 @@ from streamlit_drawable_canvas import st_canvas
 
 st.markdown(
     """
-Draw boxes labeled with whatever class is currently selected below. Switch the
-class between boxes -- boxes already on the canvas keep the label they were
-drawn with. Turn on the toolbar's pencil icon, select a box, then click it
-again to relabel it.
+Draw boxes labeled with whatever class is currently selected below. Boxes
+already on the canvas keep the label they were drawn with, even if you switch
+the class afterward. Turn on the toolbar's pencil icon, select a box, then
+click it again to relabel it.
 
 If you need a class palette, keyboard shortcuts, or a box-list panel, check
 [Streamlit Label Studio](https://discuss.streamlit.io/t/new-component-streamlit-labelstudio-allows-you-to-embed-the-label-studio-annotation-frontend-into-your-application/9524)
-instead -- this component only gives you the drawing and labeling gesture.
+instead. This component only gives you the drawing and labeling gesture.
 """
 )
 with st.echo("below"):
